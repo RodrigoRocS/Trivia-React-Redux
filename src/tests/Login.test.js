@@ -10,6 +10,7 @@ describe('Tela de Login', () => {
   let inputEmail;
   let inputName;
   let buttonPlay;
+  let buttonSettings;
   let history;
   const mockName = 'Name';
   const mockEmail = 'user@test.com';
@@ -20,12 +21,14 @@ describe('Tela de Login', () => {
     inputName = screen.getByTestId('input-player-name');
     inputEmail = screen.getByTestId('input-gravatar-email');
     buttonPlay = screen.getByTestId('btn-play');
+    buttonSettings = screen.getByTestId('btn-settings');
   });
 
   test('renderiza os elementos corretamente', () => {
     expect(inputName).toBeInTheDocument();
     expect(inputEmail).toBeInTheDocument();
     expect(buttonPlay).toBeInTheDocument();
+    expect(buttonSettings).toBeInTheDocument();
   });
 
   test('permite digitar nos inputs de nome e email', async () => {
@@ -92,6 +95,15 @@ describe('Tela de Login', () => {
     const gamePage = await screen.findByTestId('game-page');
 
     expect(history.location.pathname).toBe('/game');
+    expect(gamePage).toBeInTheDocument();
+  });
+  
+  test('redireciona para /config após clicar no botão de configurações ', async () => {
+    userEvent.click(buttonSettings);
+
+    const gamePage = await screen.findByTestId('config-page');
+
+    expect(history.location.pathname).toBe('/config');
     expect(gamePage).toBeInTheDocument();
   });
 });
