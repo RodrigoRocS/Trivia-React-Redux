@@ -3,6 +3,8 @@ import { PLAYER_NAME_EMAIL } from '../actions';
 const INITIAL_STATE = {
   gravatarEmail: '',
   name: '',
+  score: 0,
+  assertions: 0,
 };
 
 const playerLogin = (state = INITIAL_STATE, action) => {
