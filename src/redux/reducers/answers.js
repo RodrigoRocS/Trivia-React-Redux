@@ -1,6 +1,7 @@
-import { QUESTIONS_ANSWERS } from '../actions';
+import { QUESTIONS_ANSWERS, TOKEN_IS_VALID } from '../actions';
 
 const INITIAL_STATE = {
+  tokenIsValid: '',
   questions: [],
   currentQuestion: 0,
 };
@@ -10,8 +11,12 @@ const questionsAnswers = (state = INITIAL_STATE, action) => {
   case QUESTIONS_ANSWERS:
     return {
       ...state,
-      questions: action.payload.questions,
-      currentQuestion: action.payload.currentQuestion,
+      questions: action.payload,
+    };
+  case TOKEN_IS_VALID:
+    return {
+      ...state,
+      tokenIsValid: action.payload,
     };
   default:
     return state;

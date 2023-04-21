@@ -6,27 +6,30 @@ class Answer extends Component {
   render() {
     const { questions, currentQuestion } = this.props;
     const answers = [
-      { text: questions[currentQuestion]
+      { text: questions.results[currentQuestion]
         .correct_answer,
       isCorrect: true,
       testId: 'correct-answer' },
-      ...questions[currentQuestion].incorrect_answers
+      ...questions.results[currentQuestion].incorrect_answers
         .map((question) => ({
           text: question, isCorrect: false, testId: 'wrong-answer' })),
     ];
     console.log(answers);
 
-    const shuffledAnswers = answers.sort(() => Math.random() - 0.5);
+    const shufleNumber = 0.5;
+
+    const shuffledAnswers = answers.sort(() => Math.random() - shufleNumber);
 
     return (
-      <div>
-        <ul>
-          {shuffledAnswers.map((answer, index) => (
-            <li key={ index } data-testid={ answer.testId }>
+      <div data-testid="answer-options">
+
+        {shuffledAnswers
+          .map((answer, index) => (
+            <button key={ index } data-testid={ answer.testId }>
               {answer.text}
-            </li>
+            </button>
           ))}
-        </ul>
+
       </div>
     );
   }
