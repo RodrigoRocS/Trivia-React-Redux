@@ -4,8 +4,8 @@ const getRequest = async () => {
   return returnRequest;
 };
 
-const getTrivia = async () => {
-  const requestTrivia = await fetch(`https://opentdb.com/api.php?amount=5&token=${getRequest().token}`);
+const getTrivia = async (test) => {
+  const requestTrivia = await fetch(`https://opentdb.com/api.php?amount=5&token=${test}`);
   const returnTrivia = requestTrivia.json();
   return returnTrivia;
 };

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getRequest } from '../services/triviaApi';
-import { playerInfos } from '../redux/actions';
+import { playerInfos, tokenVerify } from '../redux/actions';
 
 class Login extends Component {
   state = {
@@ -29,6 +29,7 @@ class Login extends Component {
     const getToken = await getRequest();
     await localStorage.setItem('token', getToken.token);
     history.push('/game');
+    dispatch(tokenVerify(true));
   };
 
   render() {
