@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import './Answer.css';
 
 class Answer extends Component {
   state = {
     disable: true,
     timer: 30,
+    className: false,
   };
 
   componentDidMount() {
@@ -24,8 +26,12 @@ class Answer extends Component {
     }, dropdown);
   }
 
+  handleClick = () => {
+    this.setState({ className: true });
+  };
+
   render() {
-    const { disable, timer } = this.state;
+    const { disable, timer, className } = this.state;
     const { questions, currentQuestion } = this.props;
     const answers = [
       { text: questions.results[currentQuestion]
@@ -46,7 +52,13 @@ class Answer extends Component {
 
         {shuffledAnswers
           .map((answer, index) => (
-            <button key={ index } data-testid={ answer.testId } disabled={ disable }>
+            <button
+              key={ index }
+              data-testid={ answer.testId }
+              disabled={ disable }
+              onClick={ this.handleClick }
+              className={ className ? answer.testId : 'default' }
+            >
               {answer.text}
             </button>
           ))}
