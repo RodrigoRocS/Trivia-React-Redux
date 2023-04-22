@@ -1,9 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import './Answer.css';
 
 class Answer extends Component {
+  state = {
+    disable: true,
+    timer: 30,
+    className: false,
+  };
+
+  componentDidMount() {
+    const disableTime = 5000;
+    const dropdown = 1000;
+    setTimeout(() => {
+      this.setState({ disable: false });
+    }, disableTime);
+    const cronometer = setInterval(() => {
+      const { timer } = this.state;
+      this.setState({ timer: timer - 1 });
+      if (timer === 1) {
+        this.setState({ disable: true });
+        clearInterval(cronometer);
+      }
+    }, dropdown);
+  }
+
+  handleClick = () => {
+    this.setState({ className: true });
+  };
+
   render() {
+    const { disable, timer, className } = this.state;
     const { questions, currentQuestion } = this.props;
     const answers = [
       { text: questions.results[currentQuestion]
@@ -14,7 +42,6 @@ class Answer extends Component {
         .map((question) => ({
           text: question, isCorrect: false, testId: 'wrong-answer' })),
     ];
-    console.log(answers);
 
     const shufleNumber = 0.5;
 
@@ -25,11 +52,17 @@ class Answer extends Component {
 
         {shuffledAnswers
           .map((answer, index) => (
-            <button key={ index } data-testid={ answer.testId }>
+            <button
+              key={ index }
+              data-testid={ answer.testId }
+              disabled={ disable }
+              onClick={ this.handleClick }
+              className={ className ? answer.testId : 'default' }
+            >
               {answer.text}
             </button>
           ))}
-
+        <p>{ timer }</p>
       </div>
     );
   }
