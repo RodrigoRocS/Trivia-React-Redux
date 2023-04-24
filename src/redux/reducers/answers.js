@@ -1,9 +1,10 @@
-import { QUESTIONS_ANSWERS, TOKEN_IS_VALID } from '../actions';
+import { DISABLE_BTN, QUESTIONS_ANSWERS, TOKEN_IS_VALID } from '../actions';
 
 const INITIAL_STATE = {
   tokenIsValid: '',
   questions: [],
   currentQuestion: 0,
+  disable: true,
 };
 
 const questionsAnswers = (state = INITIAL_STATE, action) => {
@@ -17,6 +18,11 @@ const questionsAnswers = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       tokenIsValid: action.payload,
+    };
+  case DISABLE_BTN:
+    return {
+      ...state,
+      disable: action.payload,
     };
   default:
     return state;

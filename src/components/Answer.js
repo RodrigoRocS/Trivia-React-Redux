@@ -2,37 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Answer.css';
+import Timer from './Timer';
 
 class Answer extends Component {
   state = {
-    disable: true,
-    timer: 30,
     className: false,
   };
-
-  componentDidMount() {
-    const disableTime = 5000;
-    const dropdown = 1000;
-    setTimeout(() => {
-      this.setState({ disable: false });
-    }, disableTime);
-    const cronometer = setInterval(() => {
-      const { timer } = this.state;
-      this.setState({ timer: timer - 1 });
-      if (timer === 1) {
-        this.setState({ disable: true });
-        clearInterval(cronometer);
-      }
-    }, dropdown);
-  }
 
   handleClick = () => {
     this.setState({ className: true });
   };
 
   render() {
-    const { disable, timer, className } = this.state;
-    const { questions, currentQuestion } = this.props;
+    const { className } = this.state;
+    const { questions, currentQuestion, disable } = this.props;
     const answers = [
       { text: questions.results[currentQuestion]
         .correct_answer,
@@ -62,7 +45,7 @@ class Answer extends Component {
               {answer.text}
             </button>
           ))}
-        <p>{ timer }</p>
+        <Timer />
       </div>
     );
   }
@@ -71,6 +54,7 @@ class Answer extends Component {
 const mapStateToProps = (state) => ({
   questions: state.questionsAnswers.questions,
   currentQuestion: state.questionsAnswers.currentQuestion,
+  disable: state.questionsAnswers.disable,
 });
 
 Answer.propTypes = {
