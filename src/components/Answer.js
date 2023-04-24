@@ -29,7 +29,6 @@ class Answer extends Component {
     this.setState({ shuffledAnswers });
   }
 
-
   getQuestionDifficulty = (question) => {
     const hard = 3;
     const medium = 2;
@@ -55,7 +54,6 @@ class Answer extends Component {
     }
 
     this.setState({ className: true, showNextBtn: true });
-    
   };
 
   render() {
