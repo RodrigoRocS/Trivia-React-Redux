@@ -8,6 +8,7 @@ class Answer extends Component {
   state = {
     className: false,
     shuffledAnswers: [],
+    showNextBtn: false,
   };
 
   componentDidMount() {
@@ -28,12 +29,12 @@ class Answer extends Component {
   }
 
   handleClick = () => {
-    this.setState({ className: true });
+    this.setState({ className: true, showNextBtn: true });
   };
 
   render() {
     const { disable } = this.props;
-    const { className, shuffledAnswers } = this.state;
+    const { className, shuffledAnswers, showNextBtn } = this.state;
 
     return (
       <div data-testid="answer-options">
@@ -51,6 +52,13 @@ class Answer extends Component {
             </button>
           ))}
         <Timer />
+        {showNextBtn && (
+          <button
+            data-testid="btn-next"
+          >
+            Next
+          </button>
+        )}
       </div>
     );
   }
