@@ -7,15 +7,11 @@ import Timer from './Timer';
 class Answer extends Component {
   state = {
     className: false,
+    shuffledAnswers: [],
   };
 
-  handleClick = () => {
-    this.setState({ className: true });
-  };
-
-  render() {
-    const { className } = this.state;
-    const { questions, currentQuestion, disable } = this.props;
+  componentDidMount() {
+    const { questions, currentQuestion } = this.props;
     const answers = [
       { text: questions.results[currentQuestion]
         .correct_answer,
@@ -27,8 +23,17 @@ class Answer extends Component {
     ];
 
     const shufleNumber = 0.5;
-
     const shuffledAnswers = answers.sort(() => Math.random() - shufleNumber);
+    this.setState({ shuffledAnswers });
+  }
+
+  handleClick = () => {
+    this.setState({ className: true });
+  };
+
+  render() {
+    const { disable } = this.props;
+    const { className, shuffledAnswers } = this.state;
 
     return (
       <div data-testid="answer-options">
