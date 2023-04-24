@@ -4,6 +4,20 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Feedback extends Component {
+  componentDidMount() {
+    const { name, gravatarEmail, score } = this.props;
+    const convertImg = md5(gravatarEmail).toString();
+    const imgProfile = `https://www.gravatar.com/avatar/${convertImg}`;
+    const player = {
+      imgProfile,
+      name,
+      score,
+    };
+    const playerRanking = JSON.parse(localStorage.getItem('playerRanking') || '[]');
+    const updatedRanking = [...playerRanking, player];
+    localStorage.setItem('playerRanking', JSON.stringify(updatedRanking));
+  }
+
   handleclick = (page) => {
     const { history } = this.props;
     history.push(page);
@@ -47,11 +61,15 @@ class Feedback extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  gravatarEmail: state.player.gravatarEmail,
+  name: state.player.name,
   score: state.player.score,
   assertions: state.player.assertions,
 });
 
 Feedback.propTypes = {
+  gravatarEmail: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   assertions: PropTypes.number.isRequired,
   history: PropTypes.shape({
