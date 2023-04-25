@@ -26,13 +26,7 @@ class Questions extends Component {
   }
 
   render() {
-    const { questions, currentQuestion, tokenIsValid } = this.props;
-    const { results } = questions;
-    let renderQuestion;
-    if (results) {
-      renderQuestion = results
-        .filter((_result, index) => (index === currentQuestion));
-    }
+    const { questions: { results }, currentQuestion, tokenIsValid } = this.props;
     return (
       <div>
         { tokenIsValid ? (
@@ -40,11 +34,11 @@ class Questions extends Component {
             { results && (
               <div>
                 <p data-testid="question-category">
-                  { renderQuestion[currentQuestion].category }
+                  { `${results[currentQuestion].category}` }
                 </p>
 
                 <p data-testid="question-text">
-                  { renderQuestion[currentQuestion].question }
+                  { `${results[currentQuestion].question}` }
                 </p>
                 <Answer />
               </div>
@@ -76,9 +70,6 @@ Questions.propTypes = {
   currentQuestion: PropTypes.number.isRequired,
   tokenIsValid: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default connect(mapStateToProps)(Questions);

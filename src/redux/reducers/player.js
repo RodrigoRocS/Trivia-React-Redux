@@ -1,4 +1,4 @@
-import { PLAYER_NAME_EMAIL, SUM_SCORE } from '../actions';
+import { PLAYER_NAME_EMAIL, RESET_PLAYER, SUM_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   gravatarEmail: '',
@@ -19,6 +19,15 @@ const playerLogin = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: state.score + action.payload,
+      assertions: state.assertions + 1,
+    };
+  case RESET_PLAYER:
+    return {
+      ...state,
+      gravatarEmail: '',
+      name: '',
+      score: 0,
+      assertions: 0,
     };
   default:
     return state;

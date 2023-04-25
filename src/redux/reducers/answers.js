@@ -1,8 +1,12 @@
-import { DISABLE_BTN, QUESTIONS_ANSWERS, TOKEN_IS_VALID } from '../actions';
+import { DISABLE_BTN,
+  QUESTIONS_ANSWERS,
+  QUESTION_UPDATE,
+  RESET_QUESTION,
+  TOKEN_IS_VALID } from '../actions';
 
 const INITIAL_STATE = {
   tokenIsValid: '',
-  questions: [],
+  questions: {},
   currentQuestion: 0,
   disable: true,
 };
@@ -23,6 +27,16 @@ const questionsAnswers = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       disable: action.payload,
+    };
+  case QUESTION_UPDATE:
+    return {
+      ...state,
+      currentQuestion: state.currentQuestion + 1,
+    };
+  case RESET_QUESTION:
+    return {
+      ...state,
+      currentQuestion: 0,
     };
   default:
     return state;
