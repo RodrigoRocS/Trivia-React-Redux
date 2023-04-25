@@ -12,9 +12,9 @@ class Timer extends Component {
       dispatch(disableBtn(false));
     }, disableTime);
     const cronometer = setInterval(() => {
-      const { timer } = this.props;
+      const { timer, isPaused } = this.props;
       dispatch(timerDecrement(timer));
-      if (timer === 1) {
+      if (timer === 1 || isPaused) {
         dispatch(disableBtn(true));
         clearInterval(cronometer);
       }
@@ -31,10 +31,12 @@ class Timer extends Component {
 
 const mapStateToProps = (state) => ({
   timer: state.timer.timer,
+  isPaused: state.timer.isPaused,
 });
 
 Timer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   timer: PropTypes.number.isRequired,
+  isPaused: PropTypes.bool.isRequired,
 };
 export default connect(mapStateToProps)(Timer);

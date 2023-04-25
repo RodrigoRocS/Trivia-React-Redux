@@ -8,15 +8,15 @@ class Feedback extends Component {
   componentDidMount() {
     const { name, gravatarEmail, score } = this.props;
     const convertImg = md5(gravatarEmail).toString();
-    const imgProfile = `https://www.gravatar.com/avatar/${convertImg}`;
+    const picture = `https://www.gravatar.com/avatar/${convertImg}`;
     const player = {
-      imgProfile,
+      picture,
       name,
       score,
     };
-    const playerRanking = JSON.parse(localStorage.getItem('playerRanking') || '[]');
-    const updatedRanking = [...playerRanking, player];
-    localStorage.setItem('playerRanking', JSON.stringify(updatedRanking));
+    const ranking = JSON.parse(localStorage.getItem('ranking') || '[]');
+    const updatedRanking = [...ranking, player];
+    localStorage.setItem('ranking', JSON.stringify(updatedRanking));
   }
 
   handleclick = (page) => {

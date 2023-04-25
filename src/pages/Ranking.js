@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 
 class Ranking extends Component {
   state = {
-    playerRanking: [],
+    ranking: [],
   };
 
   componentDidMount() {
-    const playerRanking = JSON.parse(localStorage.getItem('playerRanking'))
+    const ranking = JSON.parse(localStorage.getItem('ranking'))
       .sort((a, b) => b.score - a.score);
-    this.setState({ playerRanking });
+    this.setState({ ranking });
   }
 
   handleclick = (page) => {
@@ -19,13 +19,13 @@ class Ranking extends Component {
   };
 
   render() {
-    const { playerRanking } = this.state;
+    const { ranking } = this.state;
     return (
       <div>
         <h1 data-testid="ranking-title">Melhores Jogadores !!</h1>
-        { playerRanking.map((player, index) => (
+        { ranking.map((player, index) => (
           <div key={ index }>
-            <img src={ player.imgProfile } alt="" />
+            <img src={ player.picture } alt="imagem do jogador" />
             <p data-testid={ `player-name-${index}` }>{ player.name }</p>
             <p data-testid={ `player-score-${index}` }>{ player.score }</p>
           </div>
