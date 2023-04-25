@@ -13,8 +13,6 @@ describe('Tela de Feedback', () => {
   let totalQuestion;
   let playAgainBtn;
   let rankingBtn;
-  const mockName = 'Name';
-  const mockEmail = 'user@test.com';
   let history;
 
   beforeEach(() => {
