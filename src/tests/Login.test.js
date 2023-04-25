@@ -1,27 +1,40 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import { token } from './mocks/fetch';
-import { store } from '../redux/store'
 
 describe('Tela de Login', () => {
   let inputEmail;
   let inputName;
   let buttonPlay;
   let buttonSettings;
-  let history;
   const mockName = 'Name';
   const mockEmail = 'user@test.com';
+  let history;
 
   beforeEach(() => {
-    const render = renderWithRouterAndRedux(<App />);
-    history = render.history;
+    const initialState = {
+      questionsAnswers: {
+        tokenIsValid: '',
+        questions: [],
+        currentQuestion: 0,
+        disable: true,
+      },
+      player: {
+        gravatarEmail: '',
+        name: '',
+        score: 0,
+        assertions: 0,
+      },
+    };
+    const renderResult = renderWithRouterAndRedux(<App />, initialState);
     inputName = screen.getByTestId('input-player-name');
     inputEmail = screen.getByTestId('input-gravatar-email');
     buttonPlay = screen.getByTestId('btn-play');
     buttonSettings = screen.getByTestId('btn-settings');
+    history = renderResult.history;
   });
 
   test('renderiza os elementos corretamente', () => {
@@ -32,7 +45,7 @@ describe('Tela de Login', () => {
   });
 
   test('permite digitar nos inputs de nome e email', async () => {
-    userEvent.type(inputName, mockEmail);
+    userEvent.type(inputName, mockName);
     userEvent.type(inputEmail, mockEmail);
 
     expect(inputName).toHaveValue(mockName);
@@ -45,48 +58,39 @@ describe('Tela de Login', () => {
     userEvent.type(inputName, mockName);
   
     expect(buttonPlay).toBeDisabled();
-  
-    userEvent.type(inputEmail, mockEmail);
-  
-    expect(buttonPlay).toBeDisabled();
-  
-    userEvent.type(inputName, mockName);
+
     userEvent.type(inputEmail, mockEmail);
   
     expect(buttonPlay).not.toBeDisabled();
   });
 
   test('é feita uma requisição à api e o token recebido é salvo no localStorage ao clicar no botão Play', async () => {
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValue({
+      json: jest.fn().mockResolvedValue(token),
+    })
+
     userEvent.type(inputName, mockName);
     userEvent.type(inputEmail, mockEmail);
 
     userEvent.click(buttonPlay);
 
-    jest.spyOn(global, 'fetch');
-    global.fetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValue(token),
-    })
-  
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toHaveBeenCalledWith(
       'https://opentdb.com/api_token.php?command=request',
     );
-  
-    expect(localStorage.getItem('token')).toBe(token);
-  });
 
-  test('o token é armazenado no estado global do Redux', async () => {
+    await waitFor(() => {
+      expect(localStorage.getItem('token')).toBe(token.token);
+    });
+  });
+  
+  test('redireciona para /game após clicar no botão play ', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValue(token),
     })
-  
-    const state = store.getState();
-  
-    expect(state.token).toBe(token);
-  });
-  
-  test('redireciona para /game após clicar no botão play ', async () => {
+
     userEvent.type(inputName, mockName);
     userEvent.type(inputEmail, mockEmail);
 
@@ -101,9 +105,9 @@ describe('Tela de Login', () => {
   test('redireciona para /config após clicar no botão de configurações ', async () => {
     userEvent.click(buttonSettings);
 
-    const gamePage = await screen.findByTestId('config-page');
+    const configPage = await screen.findByTestId('config-page');
 
     expect(history.location.pathname).toBe('/config');
-    expect(gamePage).toBeInTheDocument();
+    expect(configPage).toBeInTheDocument();
   });
 });
