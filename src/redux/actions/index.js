@@ -4,6 +4,8 @@ export const TOKEN_IS_VALID = 'TOKEN_IS_VALID';
 export const DISABLE_BTN = 'DISABLE_BTN';
 export const TIMER_DECREMENT = 'TIMER_DECREMENT';
 export const SUM_SCORE = 'SUM_SCORE';
+export const TIMER_UPDATE = 'TIMER_UPDATE';
+export const QUESTION_UPDATE = 'QUESTION_UPDATE';
 
 export const playerInfos = (payload) => ({
   type: PLAYER_NAME_EMAIL,
@@ -33,4 +35,13 @@ export const timerDecrement = (timerValue) => ({
 export const sumScore = (payload) => ({
   type: SUM_SCORE,
   payload,
+});
+
+export const updateTimer = (payload) => ({
+  type: TIMER_UPDATE,
+  payload,
+});
+
+export const updateQuestion = () => ({
+  type: QUESTION_UPDATE,
 });

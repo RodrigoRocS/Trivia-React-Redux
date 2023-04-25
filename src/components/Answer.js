@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import './Answer.css';
 import Timer from './Timer';
 import { sumScore } from '../redux/actions';
+import NextButton from './NextButton';
 
 class Answer extends Component {
   state = {
@@ -29,6 +30,25 @@ class Answer extends Component {
     this.setState({ shuffledAnswers });
   }
 
+  componentDidUpdate(prevProps) {
+    const { questions, currentQuestion } = this.props;
+    if (prevProps.currentQuestion !== currentQuestion) {
+      const answers = [
+        { text: questions.results[currentQuestion]
+          .correct_answer,
+        isCorrect: true,
+        testId: 'correct-answer' },
+        ...questions.results[currentQuestion].incorrect_answers
+          .map((question) => ({
+            text: question, isCorrect: false, testId: 'wrong-answer' })),
+      ];
+
+      const shufleNumber = 0.5;
+      const shuffledAnswers = answers.sort(() => Math.random() - shufleNumber);
+      this.setState({ shuffledAnswers, className: false, showNextBtn: false });
+    }
+  }
+
   getQuestionDifficulty = (question) => {
     const hard = 3;
     const medium = 2;
@@ -44,12 +64,11 @@ class Answer extends Component {
   handleClick = (isCorrect) => {
     const { questions, currentQuestion, timer, dispatch } = this.props;
     const getQuestion = questions.results[currentQuestion];
-    console.log(getQuestion);
     const questionDifficulty = this.getQuestionDifficulty(getQuestion.difficulty);
-    console.log(questionDifficulty);
     const points = 10;
+    const currentTimer = timer;
     if (isCorrect) {
-      const sumPoints = points + (timer * questionDifficulty);
+      const sumPoints = points + (currentTimer * questionDifficulty);
       dispatch(sumScore(sumPoints));
     }
 
@@ -75,14 +94,10 @@ class Answer extends Component {
               {answer.text}
             </button>
           ))}
-        <Timer />
-        {showNextBtn && (
-          <button
-            data-testid="btn-next"
-          >
-            Next
-          </button>
-        )}
+        <div>
+          { showNextBtn ? (<NextButton />) : (<Timer />) }
+        </div>
+
       </div>
     );
   }

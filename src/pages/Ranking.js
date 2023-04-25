@@ -31,7 +31,7 @@ class Ranking extends Component {
           </div>
         )) }
         <button
-          data-testid="btn-play-again"
+          data-testid="btn-go-home"
           name="/"
           onClick={ ({ target }) => this.handleclick(target.name) }
         >
