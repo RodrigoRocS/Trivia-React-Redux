@@ -1,9 +1,7 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
-import { token } from './mocks/fetch';
-import Feedback from '../pages/Feedback';
 import App from '../App';
 
 describe('Tela de Feedback', () => {
