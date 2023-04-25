@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import { token } from './mocks/fetch';
-import { store } from '../redux/store'
 
 describe('Tela de Login', () => {
   let inputEmail;
