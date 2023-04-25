@@ -26,6 +26,11 @@ class Questions extends Component {
   }
 
   render() {
+    const decodeHtml = (string) => {
+      const decodedString = document.createElement('textarea');
+      decodedString.innerHTML = string;
+      return decodedString.value;
+    };
     const { questions: { results }, currentQuestion, tokenIsValid } = this.props;
     return (
       <div>
@@ -34,11 +39,11 @@ class Questions extends Component {
             { results && (
               <div>
                 <p data-testid="question-category">
-                  { `${results[currentQuestion].category}` }
+                  {decodeHtml(results[currentQuestion].category) }
                 </p>
 
                 <p data-testid="question-text">
-                  { `${results[currentQuestion].question}` }
+                  { decodeHtml(results[currentQuestion].question)}
                 </p>
                 <Answer />
               </div>

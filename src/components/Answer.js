@@ -76,6 +76,11 @@ class Answer extends Component {
   };
 
   render() {
+    const decodeHtml = (string) => {
+      const decodedString = document.createElement('textarea');
+      decodedString.innerHTML = string;
+      return decodedString.value;
+    };
     const { disable } = this.props;
     const { className, shuffledAnswers, showNextBtn } = this.state;
 
@@ -91,7 +96,7 @@ class Answer extends Component {
               onClick={ () => this.handleClick(answer.isCorrect) }
               className={ className ? answer.testId : 'default' }
             >
-              {answer.text}
+              {decodeHtml(answer.text)}
             </button>
           ))}
         <div>
