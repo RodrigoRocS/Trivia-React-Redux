@@ -5,7 +5,7 @@ import { DISABLE_BTN,
 
 const INITIAL_STATE = {
   tokenIsValid: '',
-  questions: [],
+  questions: {},
   currentQuestion: 0,
   disable: true,
 };

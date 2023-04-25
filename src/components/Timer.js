@@ -8,17 +8,22 @@ class Timer extends Component {
     const { dispatch } = this.props;
     const disableTime = 5000;
     const dropdown = 1000;
-    setTimeout(() => {
+    this.idTimeOut = setTimeout(() => {
       dispatch(disableBtn(false));
     }, disableTime);
-    const cronometer = setInterval(() => {
-      const { timer, isPaused } = this.props;
+    this.cronometer = setInterval(() => {
+      const { timer } = this.props;
       dispatch(timerDecrement(timer));
-      if (timer === 1 || isPaused) {
+      if (timer === 1) {
         dispatch(disableBtn(true));
-        clearInterval(cronometer);
+        clearInterval(this.cronometer);
       }
     }, dropdown);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.cronometer);
+    clearTimeout(this.idTimeOut);
   }
 
   render() {
@@ -31,12 +36,10 @@ class Timer extends Component {
 
 const mapStateToProps = (state) => ({
   timer: state.timer.timer,
-  isPaused: state.timer.isPaused,
 });
 
 Timer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   timer: PropTypes.number.isRequired,
-  isPaused: PropTypes.bool.isRequired,
 };
 export default connect(mapStateToProps)(Timer);
