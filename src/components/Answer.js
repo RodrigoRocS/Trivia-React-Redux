@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Answer.css';
 import Timer from './Timer';
-import { sumScore, pauseTimer } from '../redux/actions';
+import { sumScore } from '../redux/actions';
 import NextButton from './NextButton';
 
 class Answer extends Component {
@@ -73,7 +73,6 @@ class Answer extends Component {
     }
 
     this.setState({ className: true, showNextBtn: true });
-    dispatch(pauseTimer());
   };
 
   render() {

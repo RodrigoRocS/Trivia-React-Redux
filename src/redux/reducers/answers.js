@@ -1,6 +1,7 @@
 import { DISABLE_BTN,
   QUESTIONS_ANSWERS,
   QUESTION_UPDATE,
+  RESET_QUESTION,
   TOKEN_IS_VALID } from '../actions';
 
 const INITIAL_STATE = {
@@ -31,6 +32,11 @@ const questionsAnswers = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       currentQuestion: state.currentQuestion + 1,
+    };
+  case RESET_QUESTION:
+    return {
+      ...state,
+      currentQuestion: 0,
     };
   default:
     return state;

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
+import { resetPlayer } from '../redux/actions';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -20,7 +21,8 @@ class Feedback extends Component {
   }
 
   handleclick = (page) => {
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
+    dispatch(resetPlayer());
     history.push(page);
   };
 
@@ -29,15 +31,15 @@ class Feedback extends Component {
     const feedbackMsg = (points) => {
       const minPoints = 3;
       if (points < minPoints) {
-        return 'Could be Better...';
+        return 'Could be better...';
       }
-      return 'Well Done';
+      return 'Well Done!';
     };
     return (
       <div>
         <Header />
-        <p data-testid="feedback-total-score">{`Total de pontos:${score}`}</p>
-        <p data-testid="feedback-total-question">{`Total de acertos:${assertions}`}</p>
+        <p data-testid="feedback-total-score">{`${score}`}</p>
+        <p data-testid="feedback-total-question">{`${assertions}`}</p>
         <h3 data-testid="feedback-text">{feedbackMsg(assertions)}</h3>
         <button
           data-testid="btn-play-again"
@@ -69,6 +71,7 @@ const mapStateToProps = (state) => ({
 });
 
 Feedback.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,

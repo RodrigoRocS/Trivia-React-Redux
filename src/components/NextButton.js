@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { updateQuestion, updateTimer } from '../redux/actions';
+import { resetQuestion, updateQuestion, updateTimer } from '../redux/actions';
 
 class NextButton extends Component {
   handleClick = () => {
@@ -12,6 +12,7 @@ class NextButton extends Component {
     dispatch(updateQuestion());
     dispatch(updateTimer(initialTime));
     if (currentQuestion === finalQuestion) {
+      dispatch(resetQuestion());
       return history.push('/feedback');
     }
   };
