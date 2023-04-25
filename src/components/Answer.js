@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Answer.css';
 import Timer from './Timer';
+import { sumScore } from '../redux/actions';
 
 class Answer extends Component {
   state = {
     className: false,
     shuffledAnswers: [],
+    showNextBtn: false,
   };
 
   componentDidMount() {
@@ -27,13 +29,36 @@ class Answer extends Component {
     this.setState({ shuffledAnswers });
   }
 
-  handleClick = () => {
-    this.setState({ className: true });
+  getQuestionDifficulty = (question) => {
+    const hard = 3;
+    const medium = 2;
+    const easy = 1;
+    if (question === 'hard') {
+      return hard;
+    } if (question === 'medium') {
+      return medium;
+    }
+    return easy;
+  };
+
+  handleClick = (isCorrect) => {
+    const { questions, currentQuestion, timer, dispatch } = this.props;
+    const getQuestion = questions.results[currentQuestion];
+    console.log(getQuestion);
+    const questionDifficulty = this.getQuestionDifficulty(getQuestion.difficulty);
+    console.log(questionDifficulty);
+    const points = 10;
+    if (isCorrect) {
+      const sumPoints = points + (timer * questionDifficulty);
+      dispatch(sumScore(sumPoints));
+    }
+
+    this.setState({ className: true, showNextBtn: true });
   };
 
   render() {
     const { disable } = this.props;
-    const { className, shuffledAnswers } = this.state;
+    const { className, shuffledAnswers, showNextBtn } = this.state;
 
     return (
       <div data-testid="answer-options">
@@ -44,13 +69,20 @@ class Answer extends Component {
               key={ index }
               data-testid={ answer.testId }
               disabled={ disable }
-              onClick={ this.handleClick }
+              onClick={ () => this.handleClick(answer.isCorrect) }
               className={ className ? answer.testId : 'default' }
             >
               {answer.text}
             </button>
           ))}
         <Timer />
+        {showNextBtn && (
+          <button
+            data-testid="btn-next"
+          >
+            Next
+          </button>
+        )}
       </div>
     );
   }
@@ -60,6 +92,8 @@ const mapStateToProps = (state) => ({
   questions: state.questionsAnswers.questions,
   currentQuestion: state.questionsAnswers.currentQuestion,
   disable: state.questionsAnswers.disable,
+  timer: state.timer.timer,
+  score: state.player.score,
 });
 
 Answer.propTypes = {

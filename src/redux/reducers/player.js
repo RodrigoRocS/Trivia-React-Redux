@@ -1,4 +1,4 @@
-import { PLAYER_NAME_EMAIL } from '../actions';
+import { PLAYER_NAME_EMAIL, SUM_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   gravatarEmail: '',
@@ -14,6 +14,11 @@ const playerLogin = (state = INITIAL_STATE, action) => {
       ...state,
       gravatarEmail: action.payload.email,
       name: action.payload.name,
+    };
+  case SUM_SCORE:
+    return {
+      ...state,
+      score: state.score + action.payload,
     };
   default:
     return state;
