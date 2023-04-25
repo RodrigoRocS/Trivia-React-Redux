@@ -22,19 +22,19 @@ describe('Tela de Ranking', () => {
         assertions: 0,
       },
     };
-    localStorage.setItem('playerRanking', JSON.stringify([
+    localStorage.setItem('ranking', JSON.stringify([
       {
-        imgProfile: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
+        picture: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
         name: 'Jogador 1',
         score: 100,
       },
       {
-        imgProfile: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
+        picture: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
         name: 'Jogador 2',
         score: 80,
       },
       {
-        imgProfile: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
+        picture: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
         name: 'Jogador 3',
         score: 50,
       },
