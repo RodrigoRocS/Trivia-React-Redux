@@ -1,14 +1,12 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from '../App';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import { token } from './mocks/fetch';
+import Feedback from '../pages/Feedback';
+import App from '../App';
 
-describe('Feedback', () => {
-  let inputEmail;
-  let inputName;
-  let buttonPlay;
+describe('Tela de Feedback', () => {
   let playerPicture;
   let playerName;
   let playerScore;
@@ -21,8 +19,7 @@ describe('Feedback', () => {
   const mockEmail = 'user@test.com';
   let history;
 
-  beforeEach(async () => {
-    // Estado inicial
+  beforeEach(() => {
     const initialState = {
       questionsAnswers: {
         tokenIsValid: '',
@@ -37,18 +34,17 @@ describe('Feedback', () => {
         assertions: 0,
       },
     };
-    // Renderiza o App
-    const renderResult = renderWithRouterAndRedux(<App />, initialState);
+    const renderResult = renderWithRouterAndRedux(<App />, initialState, '/feedback');
     history = renderResult.history;
-    // Faz o login
-    jest.spyOn(global, 'fetch');
-    global.fetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValue(token),
-    })
-    userEvent.type(screen.getByTestId('input-player-name'), mockName);
-    userEvent.type(screen.getByTestId('input-gravatar-email'), mockEmail);
-    userEvent.click(screen.getByTestId('btn-play'));
-    await screen.findByTestId('game-page');
+
+    playerPicture = screen.getByTestId('header-profile-picture');
+    playerName = screen.getByTestId('header-player-name');
+    playerScore = screen.getByTestId('header-score');
+    feedbackText = screen.getByTestId('feedback-text');
+    totalScore = screen.getByTestId('feedback-total-score');
+    totalQuestion = screen.getByTestId('feedback-total-question');
+    playAgainBtn = screen.getByTestId('btn-play-again');
+    rankingBtn = screen.getByTestId('btn-ranking');
   });
 
   test('renderiza corretamente as informações do jogador', () => {
@@ -61,9 +57,66 @@ describe('Feedback', () => {
     expect(playAgainBtn).toBeInTheDocument();
     expect(rankingBtn).toBeInTheDocument();
   });
-  
-  test("redireciona para '/' após clicar no botão de jogar novamente ", async () => {
 
+  test('redireciona para o login após clicar no botão de jogar novamente', async () => {
+    userEvent.click(playAgainBtn);
+
+    const loginPage = await screen.findByTestId('input-player-name');
+
+    expect(history.location.pathname).toBe('/');
+    expect(loginPage).toBeInTheDocument();
   });
 
+  test('redireciona para o ranking após clicar no botão ranking', async () => {
+    userEvent.click(rankingBtn);
+
+    const rankingPage = await screen.findByTestId('ranking-title');
+
+    expect(history.location.pathname).toBe('/ranking');
+    expect(rankingPage).toBeInTheDocument();
+  });
+});
+
+describe('Feedback com pontuação menor que 3', () => {
+  test("renderiza 'Could be Better...' quando o número de acertos é menor que 3", () => {
+    const initialState = {
+      questionsAnswers: {
+        tokenIsValid: '',
+        questions: [],
+        currentQuestion: 0,
+        disable: true,
+      },
+      player: {
+        gravatarEmail: '',
+        name: '',
+        score: 0,
+        assertions: 2,
+      },
+    };
+    const renderResult = renderWithRouterAndRedux(<App />, initialState, '/feedback');
+    const feedbackText = screen.getByTestId('feedback-text');
+    expect(feedbackText).toHaveTextContent('Could be Better...');
+  });
+});
+
+describe('Feedback com pontuação maior ou igual a 3', () => {
+  test("renderiza 'Well Done' quando o número de acertos é maior ou igual a 3", () => {
+    const initialState = {
+      questionsAnswers: {
+        tokenIsValid: '',
+        questions: [],
+        currentQuestion: 0,
+        disable: true,
+      },
+      player: {
+        gravatarEmail: '',
+        name: '',
+        score: 0,
+        assertions: 5,
+      },
+    };
+    const renderResult = renderWithRouterAndRedux(<App />, initialState, '/feedback');
+    const feedbackText = screen.getByTestId('feedback-text');
+    expect(feedbackText).toHaveTextContent('Well Done');
+  });
 });
