@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getRequest } from '../services/triviaApi';
 import { playerInfos, tokenVerify } from '../redux/actions';
+import { getRequest } from '../services/triviaApi';
+import '../styles/Login.css';
+import '../styles/buttons.css';
 
 class Login extends Component {
   state = {
@@ -40,40 +42,51 @@ class Login extends Component {
     return (
       <div>
         <form action="">
-          <label htmlFor="name">
-            <input
-              type="text"
-              data-testid="input-player-name"
-              name="name"
-              value={ name }
-              onChange={ this.onInputChange }
-              placeholder="Digite seu name"
-            />
-          </label>
-          <label htmlFor="email">
-            <input
-              type="email"
-              name="email"
-              data-testid="input-gravatar-email"
-              value={ email }
-              onChange={ this.onInputChange }
-              placeholder="Digite seu e-mail"
-            />
-          </label>
-          <button
-            data-testid="btn-settings"
-            onClick={ () => history.push('/config') }
-          >
-            Config
-          </button>
-          <button
-            data-testid="btn-play"
-            disabled={ !isValid }
-            onClick={ this.handleClick }
-          >
-            Play
+          <div>
+            <label htmlFor="name" className="input-container">
+              <input
+                className="input-login"
+                type="text"
+                data-testid="input-player-name"
+                name="name"
+                value={ name }
+                onChange={ this.onInputChange }
+                placeholder="Digite seu nome"
+              />
+            </label>
+            <label
+              htmlFor="email"
+              className="input-container"
+            >
+              <input
+                className="input-login"
+                type="email"
+                name="email"
+                data-testid="input-gravatar-email"
+                value={ email }
+                onChange={ this.onInputChange }
+                placeholder="Digite seu e-mail"
+              />
+            </label>
+          </div>
+          <div className="btn-container">
+            <button
+              className="btn-primary btn-color-primary"
+              data-testid="btn-play"
+              disabled={ !isValid }
+              onClick={ this.handleClick }
+            >
+              Play
+            </button>
 
-          </button>
+            <button
+              className="btn-primary btn-color-primary"
+              data-testid="btn-settings"
+              onClick={ () => history.push('/config') }
+            >
+              Config
+            </button>
+          </div>
         </form>
       </div>
     );

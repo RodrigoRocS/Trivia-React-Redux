@@ -1,0 +1,40 @@
+.btn-primary {
+  align-self: center;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #952e22;
+  border-radius: 0.6em;
+  box-sizing: border-box;
+  color: #b02212;
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  -ms-flex-item-align: center;
+  font-family: Montserrat , sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 10px;
+  padding: 1.2em 2.8em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.btn-primary:hover, .btn:focus {
+  color: #0fca31;
+  outline: 0;
+}
+
+.btn-color-primary {
+  background-image: linear-gradient(45deg, #820d6b 50%, transparent 50%);
+  background-position: 100%;
+  background-size: 400%;
+  border-color: #820d6b;
+  color: #fff;
+  transition: background 300ms ease-in-out;
+}
+
+.btn-color-primary:hover {
+  background-position: 0;
+}
