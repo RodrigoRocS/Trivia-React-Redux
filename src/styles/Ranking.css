@@ -1,0 +1,40 @@
+.ranking-container {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40.5px;
+  justify-content: center;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.ranking-container img {
+  border-radius: 50%;
+  height: 80px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  width: 80px;
+}
+
+.ranking-container p {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.ranking-container p:last-child {
+  color: gray;
+  font-size: 14px;
+}
+
+.btn-go-home {
+  display: flex;
+}
+
+.button-home {
+  display: flex;
+  justify-content: center;
+  margin-left: 540px;
+  margin-top: 24px;
+  width: 200px;
+}
+

@@ -1,0 +1,41 @@
+.Feedback {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.button-container {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+
+.result-container {
+  align-items: center;
+  background-color: #330597a7;
+  border: none;
+  border-radius: 7px;
+  box-shadow: 0 0 50px 0 black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+  padding: 20px;
+}
+
+.result-container p {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.result-container h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 20px 0;
+  text-align: center;
+}

@@ -50,3 +50,11 @@ body {
   min-height: 100vh;
 }
 
+.login-container {
+  background-color: #330597a7;
+  border: none;
+  border-radius: 7px;
+  box-shadow: 0 0 50px 0 black;
+  margin: 50px;
+  padding: 40px;
+}

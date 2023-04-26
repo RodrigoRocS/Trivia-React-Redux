@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
 import md5 from 'crypto-js/md5';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import '../styles/Header.css';
 
 class Header extends Component {
   render() {
@@ -9,19 +10,22 @@ class Header extends Component {
     const convertImg = md5(gravatarEmail).toString();
     const imgProfile = `https://www.gravatar.com/avatar/${convertImg}`;
     return (
-      <header>
+      <header className="header-container">
         <img
           alt="Imagem do jogador"
           src={ imgProfile }
           data-testid="header-profile-picture"
+          className="header-profile-picture"
         />
         <p
           data-testid="header-player-name"
+          className="header-player-name"
         >
           {name}
         </p>
         <p
           data-testid="header-score"
+          className="header-score"
         >
           {score}
         </p>

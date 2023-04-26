@@ -1,9 +1,11 @@
+import md5 from 'crypto-js/md5';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import { resetPlayer } from '../redux/actions';
+import '../styles/Feedback.css';
+import '../styles/buttons.css';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -38,25 +40,32 @@ class Feedback extends Component {
     return (
       <div>
         <Header />
-        <p data-testid="feedback-total-score">{`${score}`}</p>
-        <p data-testid="feedback-total-question">{`${assertions}`}</p>
-        <h3 data-testid="feedback-text">{feedbackMsg(assertions)}</h3>
-        <button
-          data-testid="btn-play-again"
-          name="/"
-          onClick={ ({ target }) => this.handleclick(target.name) }
-        >
-          Play Again
+        <div className="result-container">
+          <p data-testid="feedback-total-score">{`${score}`}</p>
+          <p data-testid="feedback-total-question">{`${assertions}`}</p>
+          <h3 data-testid="feedback-text">{feedbackMsg(assertions)}</h3>
+        </div>
 
-        </button>
-        <button
-          name="ranking"
-          data-testid="btn-ranking"
-          onClick={ ({ target }) => this.handleclick(target.name) }
-        >
-          Ranking
+        <div className="button-container">
+          <button
+            data-testid="btn-play-again"
+            name="/"
+            onClick={ ({ target }) => this.handleclick(target.name) }
+            className="btn-primary btn-color-primary"
+          >
+            Play Again
 
-        </button>
+          </button>
+          <button
+            name="ranking"
+            data-testid="btn-ranking"
+            onClick={ ({ target }) => this.handleclick(target.name) }
+            className="btn-primary btn-color-primary"
+          >
+            Ranking
+
+          </button>
+        </div>
 
       </div>
     );

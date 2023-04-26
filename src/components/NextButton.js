@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { resetQuestion, updateQuestion, updateTimer } from '../redux/actions';
+import '../styles/NextButton.css';
 import '../styles/buttons.css';
 
 class NextButton extends Component {
@@ -23,7 +24,7 @@ class NextButton extends Component {
       <button
         data-testid="btn-next"
         onClick={ this.handleClick }
-        className="btn-primary btn-color-primary"
+        className="btn-primary btn-color-primary next-button"
       >
         Next
       </button>

@@ -40,7 +40,8 @@ class Login extends Component {
     const isValid = this.validateEmail(email) && name.length > 0;
 
     return (
-      <div>
+      <div className="login-container">
+        <h1>Login</h1>
         <form action="">
           <div>
             <label htmlFor="name" className="input-container">
