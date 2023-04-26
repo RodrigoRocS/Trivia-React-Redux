@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../styles/Ranking.css';
+import '../styles/buttons.css';
 
 class Ranking extends Component {
   state = {
@@ -13,7 +15,7 @@ class Ranking extends Component {
     this.setState({ ranking });
   }
 
-  handleclick = (page) => {
+  handleClick = (page) => {
     const { history } = this.props;
     history.push(page);
   };
@@ -22,22 +24,34 @@ class Ranking extends Component {
     const { ranking } = this.state;
     return (
       <div>
-        <h1 data-testid="ranking-title">Melhores Jogadores !!</h1>
-        { ranking.map((player, index) => (
-          <div key={ index }>
-            <img src={ player.picture } alt="imagem do jogador" />
-            <p data-testid={ `player-name-${index}` }>{ player.name }</p>
-            <p data-testid={ `player-score-${index}` }>{ player.score }</p>
-          </div>
-        )) }
-        <button
-          data-testid="btn-go-home"
-          name="/"
-          onClick={ ({ target }) => this.handleclick(target.name) }
+        <h1
+          className="ranking-title"
+          data-testid="ranking-title"
         >
-          Voltar ao ínicio
+          Melhores Jogadores !!
 
-        </button>
+        </h1>
+        <div className="ranking-container">
+
+          { ranking.map((player, index) => (
+            <div key={ index }>
+              <img src={ player.picture } alt="imagem do jogador" />
+              <p data-testid={ `player-name-${index}` }>{ player.name }</p>
+              <p data-testid={ `player-score-${index}` }>{ player.score }</p>
+            </div>
+          )) }
+        </div>
+        <div className="button-home">
+
+          <button
+            data-testid="btn-go-home"
+            name="/"
+            onClick={ ({ target }) => this.handleClick(target.name) }
+            className="btn-primary btn-color-primary btn-go-home"
+          >
+            Voltar ao ínicio
+          </button>
+        </div>
       </div>
     );
   }
