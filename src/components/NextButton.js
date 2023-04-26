@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { resetQuestion, updateQuestion, updateTimer } from '../redux/actions';
+import '../styles/buttons.css';
 
 class NextButton extends Component {
   handleClick = () => {
@@ -22,6 +23,7 @@ class NextButton extends Component {
       <button
         data-testid="btn-next"
         onClick={ this.handleClick }
+        className="btn-primary btn-color-primary"
       >
         Next
       </button>

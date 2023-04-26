@@ -1,10 +1,10 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import './Answer.css';
-import Timer from './Timer';
 import { sumScore } from '../redux/actions';
+import '../styles/Answer.css';
 import NextButton from './NextButton';
+import Timer from './Timer';
 
 class Answer extends Component {
   state = {
